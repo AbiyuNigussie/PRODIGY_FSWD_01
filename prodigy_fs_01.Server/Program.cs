@@ -17,6 +17,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection"));
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder.WithOrigins("https://localhost:5173").AllowAnyHeader().AllowAnyMethod().AllowCredentials()
+        ); ;
+});
 
 /* builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
@@ -104,6 +110,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthorization();
 

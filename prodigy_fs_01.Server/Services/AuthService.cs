@@ -24,10 +24,10 @@ namespace prodigy_fs_01.Server.Services
         {
 
 
-            if (string.IsNullOrEmpty(auth.UserName) || string.IsNullOrEmpty(auth.Email) || string.IsNullOrEmpty(auth.Password))
+            if (string.IsNullOrEmpty(auth.UserName) || string.IsNullOrEmpty(auth.Password))
                 return null;
 
-            var user = _context.Users.SingleOrDefault(x => x.Email == auth.Email);
+            var user = _context.Users.SingleOrDefault(x => x.Username == auth.UserName);
 
             // check if username exists
             if (user == null)
