@@ -1,11 +1,16 @@
 import "./App.css";
-
-function App() {
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+const App = () => {
   return (
-    <>
-      <button class="btn">Button</button>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
