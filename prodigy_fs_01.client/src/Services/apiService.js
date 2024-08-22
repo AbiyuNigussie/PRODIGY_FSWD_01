@@ -19,11 +19,41 @@ export const loginUser = async (username, password) => {
   }
 };
 
+export const registerUser = async (
+  username,
+  email,
+  password,
+  role = "User"
+) => {
+  try {
+    const response = await api.post("/api/auth/register", {
+      username,
+      email,
+      password,
+      role,
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Login failed");
+  }
+};
+
 export const setAuthToken = (token) => {
   if (token) {
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   } else {
     delete api.defaults.headers.common["Authorization"];
+  }
+};
+
+export const getUserData = async () => {
+  try {
+    const response = await api.get("/api/user/me");
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || "Failed to fetch user data"
+    );
   }
 };
 
