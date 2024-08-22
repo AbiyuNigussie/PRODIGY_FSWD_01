@@ -4,6 +4,8 @@ using prodigy_fs_01.Server.Helpers;
 using prodigy_fs_01.Server.Models;
 using prodigy_fs_01.Server.Repositories;
 
+
+
 namespace prodigy_fs_01.Server.Services
 {
     public class UserService : IUserService
@@ -14,6 +16,7 @@ namespace prodigy_fs_01.Server.Services
         {
             _context = context;
         }
+
         public IEnumerable<User> GetUsers() => _context.Users.ToList();
         public User GetUserbyId(int id) => _context.Users.Find(id);
 

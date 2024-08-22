@@ -7,6 +7,7 @@ using prodigy_fs_01.Server.Data;
 using prodigy_fs_01.Server.Entity;
 using prodigy_fs_01.Server.Models;
 using prodigy_fs_01.Server.Repositories;
+using System.Security.Claims;
 
 namespace prodigy_fs_01.Server.Controllers
 {
@@ -111,6 +112,27 @@ namespace prodigy_fs_01.Server.Controllers
         {
             return _user.IsExist(id);
         }
+        [Authorize]
+        [HttpGet("/api/user/me")]
+        public IActionResult GetUserData()
+        {
 
+            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(username))
+            {
+                return Unauthorized("User ID not found in claims");
+            }
+
+            // Fetch user data from the database
+            var user = _context.Users.FirstOrDefault(u => u.Username == username);
+
+            if (user == null)
+            {
+                return NotFound("User Not Found!");
+            }
+
+            return Ok(user);
+
+        }
     }
 }
